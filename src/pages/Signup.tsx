@@ -38,6 +38,28 @@ function Signup() {
     return data.secure_url;
   };
 
+  // Firebase 에러 메시지 한국어 변환
+  const getErrorMessage = (errorCode: string): string => {
+    switch (errorCode) {
+      case "auth/email-already-in-use":
+        return "이미 사용 중인 이메일입니다.";
+      case "auth/invalid-email":
+        return "유효하지 않은 이메일 형식입니다.";
+      case "auth/operation-not-allowed":
+        return "이메일/비밀번호 계정이 비활성화되었습니다.";
+      case "auth/weak-password":
+        return "비밀번호는 최소 6자 이상이어야 합니다.";
+      case "auth/network-request-failed":
+        return "네트워크 연결에 실패했습니다.";
+      case "auth/too-many-requests":
+        return "너무 많은 요청이 발생했습니다. 잠시 후 다시 시도해주세요.";
+      case "auth/user-disabled":
+        return "비활성화된 계정입니다.";
+      default:
+        return "회원가입에 실패했습니다. 다시 시도해주세요.";
+    }
+  };
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -59,7 +81,14 @@ function Signup() {
       // 2. 프로필 이미지 업로드
       let photoURL = "";
       if (profileImage) {
-        photoURL = await uploadToCloudinary(profileImage);
+        try {
+          photoURL = await uploadToCloudinary(profileImage);
+        } catch (uploadError) {
+          console.error("이미지 업로드 실패:", uploadError);
+          setError(
+            "이미지 업로드에 실패했습니다. 프로필 이미지 없이 계속 진행합니다."
+          );
+        }
       }
 
       // 3. Firebase 프로필 업데이트
@@ -71,7 +100,8 @@ function Signup() {
       alert("회원가입 완료!");
       navigate("/");
     } catch (err: any) {
-      setError(err.message);
+      const errorMessage = getErrorMessage(err.code);
+      setError(errorMessage);
       console.error("회원가입 실패:", err);
     }
   };
