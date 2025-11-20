@@ -57,7 +57,7 @@ function Login() {
 
           <button
             onClick={handleSignIn}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium 
+            className="cursor-pointer w-full bg-blue-600 text-white py-3 rounded-lg font-medium 
                        hover:bg-blue-700 transition-colors"
           >
             로그인
