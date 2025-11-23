@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 import { t, getCurrentLanguage, setLanguage, type Language } from "../i18n";

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { auth } from "../firebase";
-import { signOut, deleteUser, type User } from "firebase/auth";
+import { signOut, deleteUser, type User, updateProfile } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { BiChevronDown } from "react-icons/bi";
 import { t, getCurrentLanguage, setLanguage, type Language } from "../i18n";
+
+const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 // 모든 언어 옵션
 const languageOptions = [
@@ -54,6 +57,7 @@ function MyPage() {
     return () => unsubscribe();
   }, [navigate]);
 
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -70,6 +74,7 @@ function MyPage() {
     if (!user) return;
 
     try {
+      // Firebase Auth에서 사용자 삭제
       await deleteUser(user);
       console.log("회원 탈퇴 성공");
       alert(t("deleteSuccess", lang));

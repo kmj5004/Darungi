@@ -400,11 +400,10 @@ const Main = () => {
           </div>
         )}
       </div>
-      <div style={{
-        position: 'absolute', top: '20px', left: '20px', background: 'white',
-        padding: '15px', borderRadius: '10px', zIndex: 10, boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
-        width: '350px'
-      }}>
+      <div
+        className="absolute top-0 left-0 z-10 w-full p-4 bg-white shadow-lg 
+                   md:top-5 md:left-5 md:w-96 md:rounded-lg md:p-5"
+      >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <h1 style={{ fontSize: '18px', fontWeight: 'bold', margin: 0 }}>따릉이 경로 안내</h1>
           {isLoggedIn && (
